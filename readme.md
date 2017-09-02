@@ -1,4 +1,7 @@
-#Walkabout#
-Walkabout is a random path generator framework. It currently includes brownian motion and geometric brownian motion simulators.
+# Walkabout #
 
-In addition, Walkabout provides an easy interface to build your on random path simulations.
+Walkabout is a stochastic process simulation framework.
+
+It currently includes Brownian Motion and Geometric Brownian Motion simulators.
+
+In addition, Walkabout provides an easy interface to build your on stochastic process simulations.
