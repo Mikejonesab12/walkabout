@@ -8,6 +8,6 @@ setup(name='walkabout',
       license='MIT',
       keywords = ['stochastic', 'finance', 'brownian', 'geometric brownian'],
       install_requires=[
-        'numpy==1.13.1',
-        'matplotlib==2.0.2'
+        'numpy==1.15.3',
+        'matplotlib==3.0.2'
       ])
