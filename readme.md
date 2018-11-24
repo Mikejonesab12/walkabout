@@ -20,7 +20,7 @@ Walkabout comes with some simulations ready out of the box.
 
 In simple terms, Brownian Motion is just random movements. Previous movements have no effect on the probability of the direction and magnitude of the next random movement.
 
-```
+```python
 import walkabout
 
 params = {
@@ -38,7 +38,7 @@ results = walkabout.simulations.brownian_motion(**params)
 
 Is the Brownian Motion process, but with an added constant drift factor.
 
-```
+```python
 import walkabout
 
 params = {
@@ -66,7 +66,7 @@ The type of simulation you want may not exist in this package. Walkabout provide
 
 Below is the exact code that was used to build the Geometric Brownian Motion simulation:
 
-```
+```python
 from walkabout import build_simulation, utility, result
 
 @build_simulation
@@ -77,9 +77,9 @@ def geometric_brownian_motion(previous_value, drift, volatility, **params):
     return result(previous_value + volatility_absolute_change + drift_absolute_change)
 ```
 
-Then to use:
+To execute:
 
-```
+```python
 params = {
     'steps': 255,
     'iterations': 5,
@@ -93,9 +93,9 @@ reults = geometric_brownian_motion(**params)
 
 You write your simulation from the perspective of a single step in the entire simulation.
 
-The data available to your step function is everything you provided in the dictionary that was passed into the original simulation call, plus some dynamic data the simulation provides. This dataset is passed into your step function as a dictionary that you can either access directly or name function parameters:
+The data available to your step function is everything you provided in the dictionary that was passed into the original simulation call, plus some dynamic data the simulation provides. This dataset is passed into your step function as a dictionary that you can either access directly or via name function parameters:
 
-```
+```python
 params = {
     'steps': 255,
     'iterations': 5,
@@ -112,41 +112,72 @@ simulation_data = {
 @build_simulation
 def cool_step_function(current_path, **params):
     print(params['previous_value']) // 100
-    print('current_path') // [95, 65, 90, 100]
+    print(current_path) // [95, 65, 90, 100]
     print(params['iterations']) // 5
 ```
 
 A simulation step must end with returning the function `result` with the calculated value for the step passed in.
 
-```
+```python
 def cool_step_function(**params):
     ...
     return result(105)
 ```
 
-You may want to persist your own data from simulation step to simulation step. You can do this by passing in a dict as the second param to the `result` function:
+You may also want to update a simulation parameter value dynamically in a step of the simulation. To do this, you simply add a dict with the key or keys of parameters you want to change as the second argument to the `result` function:
 
-```
-def cool_step_function(previous_value, rare_outcome=false, **params):
+```python
+params = {
+    'steps': 255,
+    'iterations': 5,
+    'volatility': walkabout.utility.scale_stdev(0.05, 255),
+    'drift': walkabout.utility.scale_percent(0.10, 255),
+    'rare_outcome': False,
+    'starting_value': 15
+}
+
+...
+
+def cool_step_function(previous_value, rare_outcome, volatility, **params):
     ...
     if previous_value > 100:
         rare_outcome = True
-    return result(105, {'rare_outcome': rare_outcome})
+    return result(105, {'rare_outcome': rare_outcome, 'volatility': volatility + 0.01})
 ```
 
-Then in the next iteration `rare_outcome` will be reflected as `True`.
+Then in the next simulation step `rare_outcome` will be set as `True` and `volatility` will be incremented by 0.01.
 
-With this method, you can overwrite any variable passed into the step function if the same name, like `volatility`, is used. This may be what you want. For example, a complex financial simulation may have stock volatility be dynamic and change throughout the simulation. You could do that by:
+Be careful, if you unintentionally overwrite a parameter like 'steps', bizarre behaviors could occur.
 
-```
-def cool_step_function(**params):
+You can also dynamically create new parameters in a simulation step. However, you will be responsible for the defaults and checking if keys exist to avoid errors:
+
+```python
+params = {
+    'steps': 255,
+    'iterations': 5,
+    'volatility': walkabout.utility.scale_stdev(0.05, 255),
+    'drift': walkabout.utility.scale_percent(0.10, 255),
+    'starting_value': 15
+}
+
+...
+
+def cool_step_function(previous_value, new_param1 = 0, **params):
     ...
-    return result(105, {volatility: 0.25})
+    
+    print(new_param1)
+
+    if 'new_param2' in params:
+        print(new_param2)
+
+    return result(105, {'new_param1': 1, 'new_param2': 2})
 ```
 
-However, this could be done on accident and cause bizarre behaviors.
+### Utility Functions
 
-If you are using a named function parameter, make sure you are setting a default, e.g. `rare_outcome = True`, because on the first step of the simulation it will not be defined and a syntax error will occur. Or you can forgo named function parameters and access from the `**params` function parameter instead.
+Walkabout provides a continuously updated list of utility functions to help with building your simulations.
+
+
 
 ## Todo:
 

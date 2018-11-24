@@ -17,9 +17,6 @@ def get_full_paths(handler, starting_value=0, iterations=0, steps=0, **params):
             path.append(result['value'])
             state = result['state']
         paths.append(path)
-    
-    if(len(paths)==1):
-        return paths[0]
     return paths
 
 def get_last_values(handler, starting_value=0, iterations=0, steps=0, **params):
