@@ -12,11 +12,56 @@ Install the package dependencies.
 
 In the root of the project run `python setup.py install`
 
-## Examples
+## Usage
 
-Navigate to the examples folder to see and run various usages.
+Walkabout comes with some simulations ready out of the box.
 
-To run `python3 brownian_motion.py`
+#### Brownian Motion ####
+
+In simple terms, Brownian Motion is just random movements. Previous movements have no effect on the probability of the direction and magnitude of the next random movement.
+
+```
+import walkabout
+
+params = {
+    'steps': 255,
+    'iterations': 5,
+    'volatility': walkabout.utility.scale_stdev(0.20, 255),
+    'starting_value': 15
+}
+
+results = walkabout.simulations.brownian_motion(**params)
+```
+![Brownian Motion Results Graph](https://raw.githubusercontent.com/Mikejonesab12/walkabout/master/examples/images/brownian-motion-results.png)
+
+#### Geometric Brownian Motion ####
+
+Is the Brownian Motion process, but with an added constant drift factor.
+
+```
+import walkabout
+
+params = {
+    'steps': 255,
+    'iterations': 5,
+    'volatility': walkabout.utility.scale_stdev(0.05, 255),
+    'drift': walkabout.utility.scale_percent(0.10, 255),
+    'starting_value': 15
+}
+
+results = walkabout.simulations.geometric_brownian_motion(**params)
+```
+
+![Geometric Brownian Motion Results Graph](https://raw.githubusercontent.com/Mikejonesab12/walkabout/master/examples/images/geometric-brownian-motion-results.png)
+
+#### Additional Notes ####
+
+See `examples/` for complete usage including graphing the results.
+
+To run these examples make sure your working directory is the `examples/` folder and then run `python3 {simulation name}.py` 
+
+### Build your own Simulation
+
 
 ## Todo:
 
