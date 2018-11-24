@@ -44,8 +44,8 @@ import walkabout
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, 255),
-    'drift': walkabout.utility.scale_percent(0.10, 255),
+    'volatility': walkabout.utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
     'starting_value': 15
 }
 
@@ -83,8 +83,8 @@ To execute:
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': utility.scale_stdev(0.05, 255),
-    'drift': utility.scale_percent(0.10, 255),
+    'volatility': utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'drift': utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
     'starting_value': 15
 }
 
@@ -99,8 +99,8 @@ The data available to your step function is everything you provided in the dicti
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, 255),
-    'drift': walkabout.utility.scale_percent(0.10, 255),
+    'volatility': walkabout.utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
     'starting_value': 15
 }
 
@@ -130,8 +130,8 @@ You may also want to update a simulation parameter value dynamically in a step o
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, 255),
-    'drift': walkabout.utility.scale_percent(0.10, 255),
+    'volatility': walkabout.utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
     'rare_outcome': False,
     'starting_value': 15
 }
@@ -155,8 +155,8 @@ You can also dynamically create new parameters in a simulation step. However, yo
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, 255),
-    'drift': walkabout.utility.scale_percent(0.10, 255),
+    'volatility': walkabout.utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
     'starting_value': 15
 }
 
