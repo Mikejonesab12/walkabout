@@ -1,11 +1,12 @@
 
 def build_simulation(handler):
-    def wrapper(type = 'full_path', **params):
-        if(type=='last_value'):
+    def wrapper(type='full_path', **params):
+        if(type == 'last_value'):
             return get_last_values(handler, **params)
         else:
             return get_full_paths(handler, **params)
     return wrapper
+
 
 def get_full_paths(handler, starting_value=0, iterations=0, steps=0, **params):
     paths = []
@@ -13,11 +14,17 @@ def get_full_paths(handler, starting_value=0, iterations=0, steps=0, **params):
     for iteration in range(iterations):
         path = [starting_value]
         for step in range(steps):
-            result = handler(**{'previous_value': path[step], 'current_path': path, **params, **state})
+            result = handler(**{
+                'previous_value': path[step],
+                'current_path': path,
+                **params,
+                **state
+            })
             path.append(result['value'])
             state = result['state']
         paths.append(path)
     return paths
+
 
 def get_last_values(handler, starting_value=0, iterations=0, steps=0, **params):
     paths = []
@@ -31,7 +38,8 @@ def get_last_values(handler, starting_value=0, iterations=0, steps=0, **params):
         paths.append(last_val)
     return paths
 
-def result(value, state = {}):
+
+def result(value, state={}):
     return {
         'value': value,
         'state': state

@@ -1,19 +1,24 @@
 import math
 import numpy.random as rand
 
-def random_value(vol):
-	return rand.normal(loc=0, scale=vol)
 
-def random_event(prob, vol):
-	if rand.rand() > prob:
-		return 0
-	return rand.normal(scale=vol)
+def random_value(stdev):
+    return rand.normal(scale=stdev)
 
-def scale_stdev(number, units):
-    return number * math.sqrt(1/units)
 
-def scale_percent(number, units):
-    return ((number + 1)**(1/units)) - 1
+def random_event(prob):
+    if rand.rand() < prob:
+        return True
+    return False
+
+
+def scale_stdev(number, from_unit, to_unit):
+    return float(number) * math.sqrt(float(to_unit) / float(from_unit))
+
+
+def scale_percent(number, from_unit, to_unit):
+    return ((float(number) + 1)**(to_unit/float(from_unit))) - 1
+
 
 def absolute_change(value, percent):
-    return value * percent
+    return float(value) * float(percent)
