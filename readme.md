@@ -147,7 +147,7 @@ def cool_step_function(previous_value, rare_outcome, volatility, **params):
 
 Then in the next simulation step `rare_outcome` will be set as `True` and `volatility` will be incremented by 0.01.
 
-Be careful, if you unintentionally overwrite a parameter like 'steps', bizarre behaviors could occur.
+Be careful, if you unintentionally overwrite a parameter like `steps`, bizarre behaviors could occur.
 
 You can also dynamically create new parameters in a simulation step. However, you will be responsible for the defaults and checking if keys exist to avoid errors:
 
