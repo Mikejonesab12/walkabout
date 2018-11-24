@@ -22,5 +22,10 @@ To run `python3 brownian_motion.py`
 
 * Add better documentation of features
 * Add more types of simulations
+* calculate in parallel with threads
 * Return statistics about simulations
 * Add Tests
+
+## Inspiration
+
+This project was inspired by this [blog post](http://www.turingfinance.com/random-walks-down-wall-street-stochastic-processes-in-python/)

@@ -17,6 +17,3 @@ def scale_percent(number, units):
 
 def absolute_change(value, percent):
     return value * percent
-
-def get_correlated_value(source_a, source_b, corr_coef):
-    return ((corr_coef * source_a) + math.sqrt(1 - (corr_coef**2 * source_b)))
