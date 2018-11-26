@@ -24,9 +24,9 @@ In simple terms, Brownian Motion is just random movements. Previous movements ha
 import walkabout
 
 params = {
-    'steps': 255,
+    'steps': 252,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.20, 255),
+    'volatility': walkabout.utility.scale_stdev(0.20, 252),
     'starting_value': 15
 }
 
@@ -44,8 +44,8 @@ import walkabout
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
-    'drift': walkabout.utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'volatility': walkabout.utility.scale_stdev(0.05, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
     'starting_value': 15
 }
 
@@ -64,8 +64,8 @@ import walkabout
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, from_unit=255, to_unit=1),
-    'drift': walkabout.utility.scale_percent(0.10, from_unit=255, to_unit=1),
+    'volatility': walkabout.utility.scale_stdev(0.05, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
     'starting_value': 15,
     'jump_probability': 0.003,
     'jump_average': 0.02,
@@ -104,8 +104,8 @@ To execute:
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
-    'drift': utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'volatility': utility.scale_stdev(0.05, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
+    'drift': utility.scale_percent(0.10, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
     'starting_value': 15
 }
 
@@ -114,14 +114,14 @@ reults = geometric_brownian_motion(**params)
 
 You write your simulation from the perspective of a single step in the entire simulation.
 
-The data available to your step function is everything you provided in the dictionary that was passed into the original simulation call, plus some dynamic data the simulation provides. This dataset is passed into your step function as a dictionary that you can either access directly or via name function parameters:
+The data available to your step function is everything you provided in the dictionary that was passed into the original simulation call, plus some dynamic data the simulation provides. This dataset is passed into your step function as a dictionary that you can access directly or through named function parameters:
 
 ```python
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
-    'drift': walkabout.utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'volatility': walkabout.utility.scale_stdev(0.05, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
     'starting_value': 15
 }
 
@@ -166,7 +166,7 @@ def cool_step_function(previous_value, rare_outcome, volatility, **params):
     return result(105, {'rare_outcome': rare_outcome, 'volatility': volatility + 0.01})
 ```
 
-Then in the next simulation step `rare_outcome` will be set as `True` and `volatility` will be incremented by 0.01.
+Then, in the next simulation step, `rare_outcome` will be set as `True` and `volatility` will be incremented by 0.01.
 
 Be careful, if you unintentionally overwrite a parameter like `steps`, bizarre behaviors could occur.
 
@@ -176,8 +176,8 @@ You can also dynamically create new parameters in a simulation step. However, yo
 params = {
     'steps': 255,
     'iterations': 5,
-    'volatility': walkabout.utility.scale_stdev(0.05, 255), # scaling from annual to daily (255 trading days a year in finance)
-    'drift': walkabout.utility.scale_percent(0.10, 255), # scaling from annual to daily (255 trading days a year in finance)
+    'volatility': walkabout.utility.scale_stdev(0.05, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
+    'drift': walkabout.utility.scale_percent(0.10, from_unit=252, to_unit=1), # scaling from annual to daily (252 trading days a year in finance)
     'starting_value': 15
 }
 
@@ -198,7 +198,7 @@ def cool_step_function(previous_value, new_param1 = 0, **params):
 
 Walkabout provides a continuously updated list of utility functions to help with building your simulations.
 
-Walkabout utility functions can be import from the utility sub-module like:
+Walkabout utility functions can be imported from the utility sub-module like:
 
 ```python
 from walkabout.utility import {function name}
@@ -218,7 +218,7 @@ First argument is the standard deviation and the second optional argument is the
 random_event(probability=0.5)
 ```
 
-Returns True or False randomly with the probability provided in decimal form. If no probability is provided,then this function will return True of False with 50% probability.
+Returns `True` or `False` randomly with the probability provided in decimal form. If no probability is provided, then this function will return `True` or `False` with 50% probability.
 
 #### scale_stdev ####
 
