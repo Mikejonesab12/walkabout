@@ -258,7 +258,6 @@ Takes a value and a percent change and returns the change in the value's unit. T
 
 ## Todo:
 
-* Add better documentation of features
 * Add more types of simulations
 * calculate in parallel with threads
 * Return statistics about simulations
