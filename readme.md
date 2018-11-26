@@ -2,7 +2,7 @@
 
 Walkabout is a stochastic process simulation framework.
 
-It currently includes Brownian Motion and Geometric Brownian Motion simulators.
+It currently includes Brownian Motion, Geometric Brownian Motion, and Merton Jump Diffusion Process simulators.
 
 In addition, Walkabout provides an easy interface to build your own stochastic process simulation.
 
@@ -53,6 +53,27 @@ results = walkabout.simulations.geometric_brownian_motion(**params)
 ```
 
 ![Geometric Brownian Motion Results Graph](https://raw.githubusercontent.com/Mikejonesab12/walkabout/master/examples/images/geometric-brownian-motion-results.png)
+
+#### Merton Jump Diffusion Process ####
+
+Similar to Geometric Brownian motion, but with the addition of random downward jumps. In finance this could represent rare crashes that a distribution like the Normal Distribution would not represent.
+
+```python
+import walkabout
+
+params = {
+    'steps': 255,
+    'iterations': 5,
+    'volatility': walkabout.utility.scale_stdev(0.05, from_unit=255, to_unit=1),
+    'drift': walkabout.utility.scale_percent(0.10, from_unit=255, to_unit=1),
+    'starting_value': 15,
+    'jump_probability': 0.003,
+    'jump_average': 0.02,
+    'jump_volatility': 0.00001
+}
+```
+![Merton Jump Diffusion Process Results Graph](https://raw.githubusercontent.com/Mikejonesab12/walkabout/master/examples/images/merton-jump-diffusion-results.png)
+
 
 #### Additional Notes ####
 
@@ -177,7 +198,63 @@ def cool_step_function(previous_value, new_param1 = 0, **params):
 
 Walkabout provides a continuously updated list of utility functions to help with building your simulations.
 
+Walkabout utility functions can be import from the utility sub-module like:
 
+```python
+from walkabout.utility import {function name}
+```
+
+#### random_value ####
+
+```python
+random_value(stdev, average=0)
+```
+
+First argument is the standard deviation and the second optional argument is the average. This method selects randomly from the normal distribution. 
+
+#### random_event ####
+
+```python
+random_event(probability=0.5)
+```
+
+Returns True or False randomly with the probability provided in decimal form. If no probability is provided,then this function will return True of False with 50% probability.
+
+#### scale_stdev ####
+
+```python
+scale_stdev(value, from_unit, to_unit)
+```
+
+This function scales standard deviation from one unit of time to another unit of time. For example, if you have volatility (same as standard deviation) for a stock in annual terms, but you want daily volatility, you would do this: 
+
+```python
+scale_stdev(annual_volatility, 252, 1)
+```
+
+252 is the number of trading days in a year and 1 is because we want daily volatility.
+
+#### scale_percent ####
+
+```python
+scale_percent(value, from_unit, to_unit)
+```
+
+This function scales a percent value from one unit of time to another unit of time. For example, if you have returns for a stock in annual terms, but you want monthly returns, you would do this: 
+
+```python
+scale_percent(annual_returns, 252, 21)
+```
+
+252 is the number of trading days in a year and 21 is the number of trading days in a month. Using 12, representing a year, and 1, representing a month, would produce the same result.
+
+#### absolute_change ####
+
+```python
+absolute_change(value, percent)
+```
+
+Takes a value and a percent change and returns the change in the value's unit. This is simply `value * percent`
 
 ## Todo:
 

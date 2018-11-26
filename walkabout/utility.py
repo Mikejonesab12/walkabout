@@ -2,12 +2,12 @@ import math
 import numpy.random as rand
 
 
-def random_value(stdev):
-    return rand.normal(scale=stdev)
+def random_value(stdev, average = 0):
+    return rand.normal(loc=average, scale=stdev)
 
 
-def random_event(prob):
-    if rand.rand() < prob:
+def random_event(probability=0.5):
+    if rand.rand() < probability:
         return True
     return False
 
